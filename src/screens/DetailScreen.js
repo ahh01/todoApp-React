@@ -1,15 +1,16 @@
 
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { useTodos } from "../context/TodoContext"; // Använd Context API för att hämta setTodos
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import { useTodos } from "../context/TodoContext"; 
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const DetailScreen = () => {
   const { params } = useRoute();
   const navigation = useNavigation();
   const { todo } = params;
-  const { setTodos } = useTodos(); // Hämta setTodos från Context
+  const { setTodos } = useTodos(); 
 
   const handleToggleDone = () => {
     setTodos((prevTodos) =>
@@ -34,15 +35,16 @@ const DetailScreen = () => {
         <Text style={styles.title}>{todo.title}</Text>
         <Text style={styles.description}>{todo.description}</Text>
         <Button
-            title={todo.done ? "Undo" : "Mark as Done"}
-            onPress={handleToggleDone}
-          />
+          title={todo.done ? "Undo" : "Mark as Done"}
+          onPress={handleToggleDone}
+        />
       </View>
       <View style={styles.footer}>
         <Text style={styles.date}>{currentDate}</Text>
         <View style={styles.buttons}>
-          
-          <Button title="Delete" onPress={handleDelete} />
+          <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+            <AntDesign name="delete" size={24} color="blue" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -80,6 +82,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8, 
   },
+  deleteButton: {
+    marginRight: 20,
+    marginBottom: 8,
+  }
 });
 
 export default DetailScreen;

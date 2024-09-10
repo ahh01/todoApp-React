@@ -2,9 +2,10 @@ import React from "react";
 import { View, FlatList, Text, TouchableOpacity, StyleSheet} from "react-native";
 import { useTodos } from "../context/TodoContext"; 
 import { useNavigation } from "@react-navigation/native";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const HomeScreen = () => {
-  const { todos } = useTodos(); // Hämta todos från Context
+  const { todos } = useTodos(); 
   const navigation = useNavigation();
 
   const handleNavigate = (todo) => {
@@ -16,9 +17,16 @@ const HomeScreen = () => {
       onPress={() => handleNavigate(item)}
       style={styles.itemContainer}
     >
+      <View style={styles.itemContent}>
       <Text style={styles.itemText}>
         {item.title} - {item.done ? "Done" : "Pending"}
       </Text>
+      <AntDesign
+        name="rightcircleo"
+        size={20}
+        color="black"
+        style={styles.icon}
+      /></View>
     </TouchableOpacity>
   );
 
@@ -55,8 +63,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1, // Skugga för iOS
     shadowRadius: 2, // Skugga för iOS
   },
+  itemContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
   itemText: {
     fontSize: 16,
+  },
+  icon: {
+    marginRight:15
+
   },
   emptyContainer: {
     flex: 1,
